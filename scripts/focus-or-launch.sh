@@ -5,7 +5,7 @@ set -u
 target="${1:-}"
 
 if [ -z "$target" ]; then
-    echo "Usage: $0 <qq|obsidian|browser|telegram|splayer>" >&2
+    echo "Usage: $0 <qq|obsidian|browser|telegram|clash>" >&2
     exit 2
 fi
 
@@ -60,19 +60,17 @@ case "$target" in
         fi
         exec telegram-desktop
         ;;
-    splayer)
-        if has_window 'class: (SPlayer|splayer)'; then
-            focus_window '^(SPlayer|splayer)$'
+    clash)
+        if has_window 'class: (clash-verge|io\.github\.clash-verge-rev\.clash-verge-rev)'; then
+            focus_window '^(clash-verge|io\.github\.clash-verge-rev\.clash-verge-rev)$'
             exit 0
         fi
-        if pgrep -x SPlayer >/dev/null 2>&1 || pgrep -f '/opt/SPlayer/SPlayer' >/dev/null 2>&1; then
-            exit 0
-        fi
-        exec /opt/SPlayer/SPlayer
+        # Clash Verge is single-instance; launching again usually asks the running instance to show window.
+        exec clash-verge
         ;;
     *)
         echo "Unknown target: ${target}" >&2
-        echo "Usage: $0 <qq|obsidian|browser|telegram|splayer>" >&2
+        echo "Usage: $0 <qq|obsidian|browser|telegram|clash>" >&2
         exit 2
         ;;
 esac
