@@ -21,7 +21,7 @@ focus_window() {
 
 case "$target" in
     qq)
-        if has_window 'class: (QQ|qq|linuxqq)'; then
+         if has_window 'class: (QQ|qq|linuxqq)'; then
             focus_window '^(QQ|qq|linuxqq)$'
             exit 0
         fi
